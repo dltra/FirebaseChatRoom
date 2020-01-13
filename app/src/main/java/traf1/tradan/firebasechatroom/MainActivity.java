@@ -43,6 +43,24 @@ public class MainActivity extends AppCompatActivity {
                    }
                }
            });
+        mAuth.signInWithEmailAndPassword("abc@abc.com", "tjhsst")
+           .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+               @Override
+               public void onComplete(@NonNull Task<AuthResult> task) {
+                   if (task.isSuccessful()) {
+                       // Sign in success, update UI with the signed-in user's information
+                       System.out.println("Authen test:  signInWithEmail:success");
+                       FirebaseUser user = mAuth.getCurrentUser();
+                       updateUI(user);
+                   } else {
+                       // If sign in fails, display a message to the user.
+                       System.out.println("Authen test:  signInWithEmail:failure"+task.getException());
+                       Toast.makeText(getApplicationContext(), "Authentication failed.",
+                               Toast.LENGTH_SHORT).show();
+                       updateUI(null);
+                   }
+               }
+           });
         // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
